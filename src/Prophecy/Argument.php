@@ -88,4 +88,14 @@ class Argument
     {
         return new Token\AnyValuesToken;
     }
+
+    /**
+     * Checks that argument matches all tokens
+     * @param mixed ... a list of tokens to match against
+     * @return Token\LogicalAndToken
+     */
+    public static function allOf()
+    {
+        return new Token\LogicalAndToken(func_get_args());
+    }
 }
