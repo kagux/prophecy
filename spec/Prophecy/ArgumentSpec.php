@@ -48,6 +48,5 @@ class ArgumentSpec extends ObjectBehavior
     {
         $token = $this->allOf('integer', 5);
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\LogicalAndToken');
-        Argument::allOf();
     }
 }
