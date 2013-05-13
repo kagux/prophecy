@@ -91,6 +91,7 @@ class Argument
 
     /**
      * Checks that argument matches all tokens
+     *
      * @param mixed ... a list of tokens to match against
      * @return Token\LogicalAndToken
      */
