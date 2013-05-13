@@ -88,4 +88,26 @@ class Argument
     {
         return new Token\AnyValuesToken;
     }
+
+    /**
+     * Checks that argument matches all tokens
+     * @param mixed ... a list of tokens to match against
+     * @return Token\LogicalAndToken
+     */
+    public static function allOf()
+    {
+        return new Token\LogicalAndToken(func_get_args());
+    }
+
+    /**
+     * Checks that argument array contains (key, value) pair
+     *
+     * @param mixed $key associative array key
+     * @param mixed $value array value associated with $key
+     * @return Token\ArrayEntryToken
+     */
+    public function hasEntry($key, $value)
+    {
+        return new Token\ArrayEntryToken($key, $value);
+    }
 }

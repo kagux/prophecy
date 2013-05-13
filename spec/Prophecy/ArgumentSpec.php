@@ -42,4 +42,17 @@ class ArgumentSpec extends ObjectBehavior
         $token = $this->which('getName', 'everzet');
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ObjectStateToken');
     }
+
+    function it_has_a_shortcut_for_logical_and_token()
+    {
+        $token = $this->allOf('integer', 5);
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\LogicalAndToken');
+        Argument::allOf();
+    }
+
+    function it_has_a_shortcut_for_array_entry_token()
+    {
+        $token = $this->hasEntry('key', 'value');
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayEntryToken');
+    }
 }
