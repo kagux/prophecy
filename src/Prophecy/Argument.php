@@ -107,7 +107,7 @@ class Argument
      * @param mixed $value array value associated with $key
      * @return Token\ArrayEntryToken
      */
-    public function hasEntry($key, $value)
+    public static function hasEntry($key, $value)
     {
         return new Token\ArrayEntryToken($key, $value);
     }
