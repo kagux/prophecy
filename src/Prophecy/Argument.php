@@ -93,7 +93,7 @@ class Argument
      * Checks that argument array contains (key, value) pair
      *
      * @param mixed $key associative array key
-     * @param mixed $value array value associated with $key
+     * @param mixed $value array value token associated with $key
      * @return Token\ArrayEntryToken
      */
     public static function hasEntry($key, $value)

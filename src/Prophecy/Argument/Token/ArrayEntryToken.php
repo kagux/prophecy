@@ -19,20 +19,20 @@ namespace Prophecy\Argument\Token;
 class ArrayEntryToken implements TokenInterface
 {
     private $key;
-    private $value;
+    private $valueToken;
 
     /**
      * @param mixed $key associative array key
-     * @param mixed $value array value associated with $key
+     * @param mixed $value array value token associated with $key
      */
     function __construct($key, $value)
     {
         $this->key = $key;
-        $this->value = $value;
+        $this->valueToken = $value instanceof TokenInterface ? $value : new ExactValueToken($value);
     }
 
     /**
-     * Scores 8 if argument is an array and it contains preset (key, value) pair
+     * Scores the amount scored by value token plus one, but capped at 8
      *
      * @param $argument
      *
@@ -40,9 +40,11 @@ class ArrayEntryToken implements TokenInterface
      */
     public function scoreArgument($argument)
     {
-        return is_array($argument) &&
-               array_key_exists($this->key, $argument) &&
-               $argument[$this->key] === $this->value ? 8 : false;
+        if (!is_array($argument) || !array_key_exists($this->key, $argument)){
+            return false;
+        }
+        $score = $this->valueToken->scoreArgument($argument[$this->key]);
+        return false === $score? false : min(8,$score + 1);
     }
 
     /**
@@ -62,6 +64,6 @@ class ArrayEntryToken implements TokenInterface
      */
     public function __toString()
     {
-        return sprintf('array(..., [%s] => [%s], ...)', $this->key, $this->value);
+        return sprintf('array(..., [%s] => [%s], ...)', $this->key, $this->valueToken);
     }
 }
