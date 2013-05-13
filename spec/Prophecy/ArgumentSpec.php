@@ -47,7 +47,6 @@ class ArgumentSpec extends ObjectBehavior
     {
         $token = $this->allOf('integer', 5);
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\LogicalAndToken');
-        Argument::allOf();
     }
 
     function it_has_a_shortcut_for_array_entry_token()
