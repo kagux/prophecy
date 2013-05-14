@@ -54,4 +54,10 @@ class ArgumentSpec extends ObjectBehavior
         $token = $this->hasEntry('key', 'value');
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayEntryToken');
     }
+
+    function it_has_a_shortcut_for_logical_not_token()
+    {
+        $token = $this->not('kagux');
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\LogicalNotToken');
+    }
 }
