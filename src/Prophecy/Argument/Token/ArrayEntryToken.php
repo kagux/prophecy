@@ -18,7 +18,9 @@ namespace Prophecy\Argument\Token;
  */
 class ArrayEntryToken implements TokenInterface
 {
+    /** @var \Prophecy\Argument\Token\ExactValueToken */
     private $key;
+    /** @var \Prophecy\Argument\Token\ExactValueToken|\Prophecy\Argument\Token\TokenInterface */
     private $valueToken;
 
     /**
@@ -27,7 +29,7 @@ class ArrayEntryToken implements TokenInterface
      */
     function __construct($key, $value)
     {
-        $this->key = $key;
+        $this->key = new ExactValueToken($key);
         $this->valueToken = $value instanceof TokenInterface ? $value : new ExactValueToken($value);
     }
 
@@ -40,10 +42,10 @@ class ArrayEntryToken implements TokenInterface
      */
     public function scoreArgument($argument)
     {
-        if (!is_array($argument) || !array_key_exists($this->key, $argument)){
+        if (!is_array($argument) || !array_key_exists($this->key->getValue(), $argument)){
             return false;
         }
-        $score = $this->valueToken->scoreArgument($argument[$this->key]);
+        $score = $this->valueToken->scoreArgument($argument[$this->key->getValue()]);
         return false === $score? false : min(8,$score + 1);
     }
 
@@ -64,6 +66,6 @@ class ArrayEntryToken implements TokenInterface
      */
     public function __toString()
     {
-        return sprintf('array(..., [%s] => [%s], ...)', $this->key, $this->valueToken);
+        return sprintf('[..., %s => %s, ...]', $this->key, $this->valueToken);
     }
 }

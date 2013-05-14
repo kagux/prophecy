@@ -27,13 +27,41 @@ class ArrayEntryTokenSpec extends ObjectBehavior
     {
         $token->__toString()->willReturn('value');
         $this->beConstructedWith('key', $token);
-        $this->__toString()->shouldBe('array(..., [key] => [value], ...)');
+        $this->__toString()->shouldBe('[..., exact("key") => value, ...]');
     }
 
-    function it_wraps_non_token_value_into_ExactValueToken()
+    /**
+     * @param \stdClass $object
+     */
+    function it_wraps_non_token_value_into_ExactValueToken($object)
     {
         $this->beConstructedWith('key', 5);
-        $this->__toString()->shouldBe('array(..., [key] => [exact(5)], ...)');
+        $this->__toString()->shouldBe('[..., exact("key") => exact(5), ...]');
+
+        $this->beConstructedWith('key', '5');
+        $this->__toString()->shouldBe('[..., exact("key") => exact("5"), ...]');
+
+        $hash = spl_object_hash($object->getWrappedObject());
+        $class = get_class($object->getWrappedObject());
+        $this->beConstructedWith('key',$object);
+        $this->__toString()->shouldBe(sprintf('[..., exact("key") => exact(%s:%s), ...]', $class, $hash));
+    }
+
+    /**
+     * @param \stdClass $object
+     */
+    function it_wraps_key_into_ExactValueToken($object)
+    {
+        $this->beConstructedWith(5, 5);
+        $this->__toString()->shouldBe('[..., exact(5) => exact(5), ...]');
+
+        $this->beConstructedWith('key', 5);
+        $this->__toString()->shouldBe('[..., exact("key") => exact(5), ...]');
+
+        $hash = spl_object_hash($object->getWrappedObject());
+        $class = get_class($object->getWrappedObject());
+        $this->beConstructedWith($object, 5);
+        $this->__toString()->shouldBe(sprintf('[..., exact(%s:%s) => exact(5), ...]', $class, $hash));
     }
 
     /**
