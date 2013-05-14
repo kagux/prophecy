@@ -42,4 +42,10 @@ class ArgumentSpec extends ObjectBehavior
         $token = $this->which('getName', 'everzet');
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ObjectStateToken');
     }
+
+    function it_has_a_shortcut_for_logical_not_token()
+    {
+        $token = $this->not('kagux');
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\LogicalNotToken');
+    }
 }
