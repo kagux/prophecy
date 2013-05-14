@@ -74,6 +74,6 @@ class LogicalAndToken implements TokenInterface
      */
     public function __toString()
     {
-        return sprintf('[%s]', join(' AND ', $this->tokens));
+        return sprintf('bool(%s)', join(' AND ', $this->tokens));
     }
 }
