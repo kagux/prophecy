@@ -10,13 +10,13 @@ class ArrayEntryTokenSpec extends ObjectBehavior
 
     function it_implements_TokenInterface()
     {
-        $this->beConstructedWith('key', 'value_token');
+        $this->beConstructedWith('key', 'value');
         $this->shouldBeAnInstanceOf('Prophecy\Argument\Token\TokenInterface');
     }
 
     function it_is_not_last()
     {
-        $this->beConstructedWith('key', 'value_token');
+        $this->beConstructedWith('key', 'value');
         $this->shouldNotBeLast();
     }
 
