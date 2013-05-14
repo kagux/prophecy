@@ -60,4 +60,10 @@ class ArgumentSpec extends ObjectBehavior
         $token = $this->not('kagux');
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\LogicalNotToken');
     }
+
+    function it_has_a_shortcut_for_array_count_token()
+    {
+        $token = $this->count(5);
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayCountToken');
+    }
 }
