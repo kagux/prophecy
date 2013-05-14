@@ -32,13 +32,13 @@ class LogicalAndTokenSpec extends ObjectBehavior
         $token3->__toString()->willReturn('token_3');
 
         $this->beConstructedWith(array($token1, $token2, $token3));
-        $this->__toString()->shouldReturn('[token_1 AND token_2 AND token_3]');
+        $this->__toString()->shouldReturn('bool(token_1 AND token_2 AND token_3)');
     }
 
     function it_wraps_non_token_arguments_into_ExactValueToken()
     {
         $this->beConstructedWith(array(15,'1985'));
-        $this->__toString()->shouldReturn("[exact(15) AND exact(\"1985\")]");
+        $this->__toString()->shouldReturn("bool(exact(15) AND exact(\"1985\"))");
     }
 
     /**
