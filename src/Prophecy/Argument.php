@@ -88,4 +88,15 @@ class Argument
     {
         return new Token\AnyValuesToken;
     }
+
+    /**
+     * Checks that argument array or countable object has exact number of elements.
+     *
+     * @param integer $value array elements count
+     * @return Token\ArrayCountToken
+     */
+    public static function count($value)
+    {
+        return new Token\ArrayCountToken($value);
+    }
 }
