@@ -66,6 +66,6 @@ class ArrayEntryToken implements TokenInterface
      */
     public function __toString()
     {
-        return sprintf('contains(%s => %s)', $this->key, $this->valueToken);
+        return sprintf('[..., %s => %s, ...]', $this->key, $this->valueToken);
     }
 }
