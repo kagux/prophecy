@@ -35,7 +35,7 @@ class LogicalAndToken implements TokenInterface
     }
 
     /**
-     * Scores sum of scores returned by tokens for this argument if all of them score.
+     * Scores maximum score from scores returned by tokens for this argument if all of them score.
      *
      * @param $argument
      *
@@ -46,15 +46,15 @@ class LogicalAndToken implements TokenInterface
         if (0 === count($this->tokens)) {
             return false;
         }
-        $totalScore = 0;
+        $maxScore = 0;
         foreach($this->tokens as $token){
             $score = $token->scoreArgument($argument);
             if(false === $score) {
                 return false;
             }
-            $totalScore += $score;
+            $maxScore = max($score, $maxScore);
         }
-        return $totalScore;
+        return $maxScore;
     }
 
     /**
