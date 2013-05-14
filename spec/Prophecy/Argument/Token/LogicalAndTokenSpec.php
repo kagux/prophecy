@@ -63,7 +63,7 @@ class LogicalAndTokenSpec extends ObjectBehavior
      * @param \Prophecy\Argument\Token\TokenInterface $token1
      * @param \Prophecy\Argument\Token\TokenInterface $token2
      */
-    function it_does_not_score_if_any_argument_does_not_score($token1, $token2)
+    function it_does_not_score_if_either_of_tokens_does_not_score($token1, $token2)
     {
         $token1->scoreArgument(1)->willReturn(10);
         $token1->scoreArgument(2)->willReturn(false);
