@@ -45,12 +45,12 @@ class LogicalAndTokenSpec extends ObjectBehavior
      * @param \Prophecy\Argument\Token\TokenInterface $token1
      * @param \Prophecy\Argument\Token\TokenInterface $token2
      */
-    function it_returns_score_as_sum_of_all_tokens_scores($token1, $token2)
+    function it_scores_the_maximum_score_from_all_scores_returned_by_tokens($token1, $token2)
     {
         $token1->scoreArgument(1)->willReturn(10);
         $token2->scoreArgument(1)->willReturn(5);
         $this->beConstructedWith(array($token1, $token2));
-        $this->scoreArgument(1)->shouldReturn(15);
+        $this->scoreArgument(1)->shouldReturn(10);
     }
 
     function it_does_not_score_if_there_are_no_arguments_or_tokens()
