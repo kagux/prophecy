@@ -144,4 +144,15 @@ class Argument
     {
         return new Token\ArrayEntryToken($key, self::any());
     }
+ 
+    /**
+     * Checks that argument does not match the value|token.
+     *
+     * @param mixed $value either exact value or argument token
+     * @return Token\LogicalNotToken
+     */
+    public static function not($value)
+    {
+        return new Token\LogicalNotToken($value);
+    }
 }
