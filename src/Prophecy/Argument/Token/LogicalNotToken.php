@@ -21,7 +21,7 @@ class LogicalNotToken implements TokenInterface
     private $token;
 
     /**
-     * @param mixed $value either exact value or argument token
+     * @param mixed $value exact value or token
      */
     function __construct($value)
     {
@@ -41,13 +41,23 @@ class LogicalNotToken implements TokenInterface
     }
 
     /**
-     * Returns true if preset token is last
+     * Returns true if preset token is last.
      *
      * @return bool|int
      */
     public function isLast()
     {
         return $this->token->isLast();
+    }
+
+    /**
+     * Returns value.
+     *
+     * @return ExactValueToken|TokenInterface
+     */
+    public function getValue()
+    {
+        return $this->token;
     }
 
     /**
