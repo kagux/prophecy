@@ -92,12 +92,34 @@ class Argument
     /**
      * Checks that argument array contains (key, value) pair
      *
-     * @param mixed $key associative array key
-     * @param mixed $value array value token associated with $key
+     * @param mixed $key exact value or token
+     * @param mixed $value exact value or token
      * @return Token\ArrayEntryToken
      */
     public static function hasEntry($key, $value)
     {
         return new Token\ArrayEntryToken($key, $value);
+    }
+
+    /**
+     * Checks that argument array contains value
+     *
+     * @param mixed $value
+     * @return Token\ArrayEntryToken
+     */
+    public static function contains($value)
+    {
+        return new Token\ArrayEntryToken(self::any(), $value);
+    }
+
+    /**
+     * Checks that argument array has key
+     *
+     * @param mixed $key exact value or token
+     * @return Token\ArrayEntryToken
+     */
+    public static function hasKey($key)
+    {
+        return new Token\ArrayEntryToken($key, self::any());
     }
 }

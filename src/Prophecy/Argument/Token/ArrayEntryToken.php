@@ -21,20 +21,20 @@ class ArrayEntryToken implements TokenInterface
     /** @var \Prophecy\Argument\Token\ExactValueToken */
     private $key;
     /** @var \Prophecy\Argument\Token\ExactValueToken|\Prophecy\Argument\Token\TokenInterface */
-    private $valueToken;
+    private $value;
 
     /**
-     * @param mixed $key associative array key
-     * @param mixed $value array value token associated with $key
+     * @param mixed $key exact value or token
+     * @param mixed $value exact value or token
      */
     function __construct($key, $value)
     {
-        $this->key = new ExactValueToken($key);
-        $this->valueToken = $value instanceof TokenInterface ? $value : new ExactValueToken($value);
+        $this->key = $this->wrapIntoExactValueToken($key);
+        $this->value =$this->wrapIntoExactValueToken($value);
     }
 
     /**
-     * Scores the amount scored by value token plus one, but capped at 8
+     * Scores half of combined scores from key and value tokens for same entry. Capped at 8.
      *
      * @param $argument
      *
@@ -42,11 +42,12 @@ class ArrayEntryToken implements TokenInterface
      */
     public function scoreArgument($argument)
     {
-        if (!is_array($argument) || !array_key_exists($this->key->getValue(), $argument)){
+        if(!is_array($argument)){
             return false;
         }
-        $score = $this->valueToken->scoreArgument($argument[$this->key->getValue()]);
-        return false === $score? false : min(8,$score + 1);
+        $key_scores = array_map(array($this->key,'scoreArgument'), array_keys($argument));
+        $value_scores = array_map(array($this->value,'scoreArgument'), $argument);
+        return max(array_map(function($v, $k){return $v && $k ? min(8,($k + $v)/2):false;}, $value_scores, $key_scores));
     }
 
     /**
@@ -66,6 +67,37 @@ class ArrayEntryToken implements TokenInterface
      */
     public function __toString()
     {
-        return sprintf('[..., %s => %s, ...]', $this->key, $this->valueToken);
+        return sprintf('[..., %s => %s, ...]', $this->key, $this->value);
+    }
+
+    /**
+     * Returns key
+     *
+     * @return TokenInterface
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Returns value
+     *
+     * @return TokenInterface
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Wraps non token $value into ExactValueToken
+     *
+     * @param $value
+     * @return ExactValueToken|TokenInterface
+     */
+    private function wrapIntoExactValueToken($value)
+    {
+        return $value instanceof TokenInterface ? $value : new ExactValueToken($value);
     }
 }
