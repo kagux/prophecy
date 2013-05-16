@@ -18,8 +18,12 @@ class LogicalNotTokenSpec extends ObjectBehavior
 
     function it_implements_TokenInterface()
     {
-        $this->beConstructedWith('value');
         $this->shouldBeAnInstanceOf('Prophecy\Argument\Token\TokenInterface');
+    }
+
+    function it_holds_the_value($token)
+    {
+        $this->getValue()->shouldReturn($token);
     }
 
     function it_has_simple_string_representation(TokenInterface $token)
@@ -31,9 +35,9 @@ class LogicalNotTokenSpec extends ObjectBehavior
     function it_wraps_non_token_argument_into_ExactValueToken()
     {
         $this->beConstructedWith(5);
-        $this->__toString()->shouldBe('not(exact(5))');
-        $this->beConstructedWith('value');
-        $this->__toString()->shouldBe('not(exact("value"))');
+        $token = $this->getValue();
+        $token->shouldhaveType('Prophecy\Argument\Token\ExactValueToken');
+        $token->getValue()->shouldBe(5);
     }
 
     function it_scores_8_if_preset_token_does_not_match_the_argument(TokenInterface $token)
