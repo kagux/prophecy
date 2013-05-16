@@ -22,7 +22,7 @@ class ArrayCountToken implements TokenInterface
     private $count;
 
     /**
-     * @param integer $value array elements count
+     * @param integer $value
      */
     function __construct($value)
     {
