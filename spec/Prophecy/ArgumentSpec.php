@@ -54,4 +54,24 @@ class ArgumentSpec extends ObjectBehavior
         $token = $this->count(5);
         $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayCountToken');
     }
+
+    function it_has_a_shortcut_for_array_entry_token()
+    {
+        $token = $this->hasEntry('key', 'value');
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayEntryToken');
+    }
+
+    function it_has_a_shortcut_for_array_entry_token_matching_any_key()
+    {
+        $token = $this->contains('value');
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayEntryToken');
+        $token->getKey()->shouldHaveType('Prophecy\Argument\Token\AnyValueToken');
+    }
+
+    function it_has_a_shortcut_for_array_entry_token_matching_any_value()
+    {
+        $token = $this->hasKey('key');
+        $token->shouldBeAnInstanceOf('Prophecy\Argument\Token\ArrayEntryToken');
+        $token->getValue()->shouldHaveType('Prophecy\Argument\Token\AnyValueToken');
+    }
 }
