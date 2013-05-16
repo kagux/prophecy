@@ -103,7 +103,7 @@ class Argument
     /**
      * Checks that argument matches all tokens
      *
-     * @param mixed ... a list of tokens to match against
+     * @param mixed ... a list of tokens
      * @return Token\LogicalAndToken
      */
     public static function allOf()

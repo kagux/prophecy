@@ -22,7 +22,7 @@ class LogicalAndToken implements TokenInterface
     private $tokens = array();
 
     /**
-     * @param array $arguments Array of argument tokens or values
+     * @param array $arguments exact values or tokens
      */
     function __construct(array $arguments)
     {
